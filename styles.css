@@ -1,4 +1,642 @@
-/* Replace your existing OTP block in styles.css with this */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #1a191e 0%,
+            #0c0c0e 48%,
+            #050506 100%
+        );
+
+    color: #fff;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================
+   PAGE
+========================================= */
+
+.page {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 35px 20px;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.otp-card {
+    width: min(430px, 100%);
+
+    min-height: 600px;
+
+    position: relative;
+
+    padding:
+        42px 36px 34px;
+
+    border-radius: 34px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #111114 0%,
+            #0d0d10 100%
+        );
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.05);
+
+    box-shadow:
+        0 35px 100px
+        rgba(0, 0, 0, 0.58),
+
+        inset
+        0 1px 0
+        rgba(255, 255, 255, 0.025);
+
+    overflow: hidden;
+
+    animation:
+        cardEnter
+        .7s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes cardEnter {
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(25px)
+            scale(.96);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================
+   CARD LIGHT
+========================================= */
+
+.card-light {
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    left: 50%;
+    top: -115px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 128, 38, .12);
+
+    filter:
+        blur(50px);
+
+    transition:
+        background
+        .5s ease;
+}
+
+.otp-card.success .card-light {
+    background:
+        rgba(30, 215, 143, .17);
+}
+
+
+/* =========================================
+   PHONE AREA
+========================================= */
+
+.phone-area {
+    height: 245px;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================================
+   PHONE
+========================================= */
+
+.phone {
+    width: 145px;
+    height: 228px;
+
+    position: relative;
+
+    padding: 3px;
+
+    border-radius: 32px;
+
+    background:
+        #272b30;
+
+    box-shadow:
+        0 18px 40px
+        rgba(0, 0, 0, .58);
+
+    transition:
+        box-shadow .4s ease,
+        transform .4s ease;
+}
+
+
+/* =========================================
+   MOVING LOADING BORDER
+========================================= */
+
+.phone-loader {
+    position: absolute;
+
+    inset: -3px;
+
+    border-radius: 35px;
+
+    background:
+        conic-gradient(
+            from 0deg,
+            transparent 0deg,
+            transparent 35deg,
+            #ff6b32 80deg,
+            #ffae38 120deg,
+            #ff413e 165deg,
+            transparent 220deg,
+            transparent 360deg
+        );
+
+    opacity: 0;
+
+    z-index: 0;
+
+    animation:
+        rotateLoader
+        1.35s
+        linear
+        infinite;
+
+    transition:
+        opacity .3s ease;
+
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+
+    -webkit-mask-composite:
+        xor;
+
+    mask-composite:
+        exclude;
+
+    padding: 3px;
+}
+
+.phone.verifying .phone-loader {
+    opacity: 1;
+}
+
+@keyframes rotateLoader {
+    to {
+        transform:
+            rotate(360deg);
+    }
+}
+
+
+/* =========================================
+   EXTRA ORANGE GLOW
+========================================= */
+
+.phone.verifying::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -8px;
+
+    border-radius: 38px;
+
+    background:
+        conic-gradient(
+            from 0deg,
+            transparent 0deg,
+            rgba(255, 88, 40, .8) 80deg,
+            transparent 150deg,
+            transparent 260deg,
+            rgba(255, 138, 48, .6) 300deg,
+            transparent 360deg
+        );
+
+    filter:
+        blur(10px);
+
+    opacity:
+        .48;
+
+    z-index: -1;
+
+    animation:
+        rotateLoader
+        1.5s
+        linear
+        infinite;
+}
+
+
+/* =========================================
+   PHONE INNER
+========================================= */
+
+.phone-inner {
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+
+    z-index: 2;
+
+    border-radius: 29px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(255, 133, 53, .08),
+            transparent 42%
+        ),
+        #121417;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    padding: 12px;
+}
+
+.phone.verified {
+    background:
+        linear-gradient(
+            140deg,
+            #1fcf92,
+            #087455
+        );
+
+    box-shadow:
+        0 0 40px
+        rgba(22, 215, 143, .25);
+}
+
+.phone.verified .phone-inner {
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(25, 220, 150, .12),
+            transparent 43%
+        ),
+        #0f1714;
+}
+
+
+/* =========================================
+   PHONE STATUS
+========================================= */
+
+.phone-status {
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 7px;
+
+    color:
+        rgba(255,255,255,.42);
+}
+
+
+/* =========================================
+   LOCK
+========================================= */
+
+.phone-lock {
+    margin-top: 37px;
+
+    text-align: center;
+
+    font-size: 36px;
+
+    filter:
+        drop-shadow(
+            0 0 9px
+            rgba(255, 150, 45, .32)
+        );
+
+    transition:
+        transform .4s ease,
+        filter .4s ease;
+}
+
+.phone.verified .phone-lock {
+    filter:
+        drop-shadow(
+            0 0 10px
+            rgba(22, 225, 150, .38)
+        );
+
+    transform:
+        scale(1.06);
+}
+
+
+/* =========================================
+   CHECKS
+========================================= */
+
+.phone-checks {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    top: 89px;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    opacity: 0;
+
+    transform:
+        scale(.8);
+
+    transition:
+        opacity .45s ease,
+        transform .45s ease;
+}
+
+.phone-checks span {
+    color:
+        #24d69b;
+
+    font-size: 16px;
+
+    text-shadow:
+        0 0 10px
+        rgba(36, 214, 155, .5);
+}
+
+.phone.verified .phone-checks {
+    opacity: 1;
+
+    transform:
+        scale(1);
+}
+
+
+/* =========================================
+   PHONE BUTTON
+========================================= */
+
+.phone-button {
+    position: absolute;
+
+    left: 20px;
+    right: 20px;
+
+    bottom: 38px;
+
+    height: 28px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff9d1b,
+            #ff7b13
+        );
+
+    color:
+        #2c1704;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    transition:
+        background .4s ease,
+        color .4s ease;
+}
+
+.phone.verified .phone-button {
+    background:
+        #1cc98e;
+
+    color:
+        #06291d;
+}
+
+
+/* =========================================
+   PHONE HOME
+========================================= */
+
+.phone-home {
+    position: absolute;
+
+    width: 32px;
+    height: 3px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.17);
+
+    left: 50%;
+    bottom: 12px;
+
+    transform:
+        translateX(-50%);
+}
+
+
+/* =========================================
+   FLOATING ICONS
+========================================= */
+
+.floating-mail {
+    position: absolute;
+
+    left: 40px;
+    bottom: 45px;
+
+    width: 32px;
+    height: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 4px;
+
+    background: white;
+
+    color: #e54f43;
+
+    font-size: 19px;
+
+    box-shadow:
+        0 6px 18px
+        rgba(0,0,0,.35);
+
+    animation:
+        floatMail
+        3s
+        ease-in-out
+        infinite;
+}
+
+.floating-shield {
+    position: absolute;
+
+    right: 38px;
+    top: 64px;
+
+    color:
+        #31bde4;
+
+    font-size: 36px;
+
+    opacity: .78;
+
+    animation:
+        floatShield
+        4s
+        ease-in-out
+        infinite;
+}
+
+@keyframes floatMail {
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(-2deg);
+    }
+
+    50% {
+        transform:
+            translateY(-8px)
+            rotate(3deg);
+    }
+}
+
+@keyframes floatShield {
+    0%,
+    100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(8px);
+    }
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.content {
+    text-align: center;
+
+    margin-top: 12px;
+}
+
+.content h1 {
+    font-size: 24px;
+
+    font-weight: 700;
+
+    letter-spacing:
+        -.5px;
+
+    transition:
+        color .4s ease;
+}
+
+.content p {
+    margin-top: 10px;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    color:
+        rgba(255,255,255,.32);
+}
+
+.otp-card.verifying .content h1 {
+    color:
+        #ffab5b;
+}
+
+
+/* =========================================
+   OTP
+========================================= */
+
 .otp-container {
     display: flex;
     justify-content: center;
@@ -20,8 +658,258 @@
     caret-color: #ff9237;
     transition: border .2s ease, box-shadow .2s ease, transform .2s ease, background .2s ease;
 }
+.otp-input:focus {
+    transform:
+        translateY(-3px);
+}
 
-/* Replace your existing Mobile Media Query with this */
+.otp-input.active {
+    border-color:
+        #ff8a34;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 117, 44, .13),
+
+        0 0 20px
+        rgba(255, 117, 44, .18);
+}
+
+.otp-input.filled {
+    background:
+        #1c1c20;
+
+    animation:
+        digitPop
+        .22s
+        ease;
+}
+
+@keyframes digitPop {
+    from {
+        transform:
+            scale(.82);
+    }
+
+    to {
+        transform:
+            scale(1);
+    }
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status-row {
+    min-height: 18px;
+
+    margin-top: 10px;
+
+    text-align: center;
+}
+
+#statusText {
+    font-size: 11px;
+
+    color:
+        #ff9460;
+}
+
+
+/* =========================================
+   RESEND
+========================================= */
+
+.resend-row {
+    margin-top: 25px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    font-size: 11px;
+
+    color:
+        rgba(255,255,255,.30);
+}
+
+.resend-row button {
+    background:
+        transparent;
+
+    border: none;
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.resend-row button:hover {
+    color:
+        #ff9b39;
+}
+
+
+/* =========================================
+   SUCCESS
+========================================= */
+
+.success-screen {
+    text-align: center;
+
+    padding-top: 10px;
+
+    animation:
+        successEnter
+        .55s
+        ease;
+}
+
+@keyframes successEnter {
+    from {
+        opacity: 0;
+
+        transform:
+            scale(.84)
+            translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            scale(1)
+            translateY(0);
+    }
+}
+
+.success-check {
+    width: 65px;
+    height: 65px;
+
+    margin:
+        8px auto 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        #18c98c;
+
+    color:
+        #062b1e;
+
+    font-size: 34px;
+
+    font-weight: 900;
+
+    box-shadow:
+        0 0 0 7px
+        rgba(24,201,140,.07),
+
+        0 0 30px
+        rgba(24,201,140,.28);
+
+    animation:
+        checkPop
+        .65s
+        cubic-bezier(.2,1.4,.4,1);
+}
+
+@keyframes checkPop {
+    0% {
+        transform:
+            scale(0);
+    }
+
+    70% {
+        transform:
+            scale(1.15);
+    }
+
+    100% {
+        transform:
+            scale(1);
+    }
+}
+
+.success-screen h2 {
+    font-size: 24px;
+
+    color:
+        #24dca2;
+}
+
+.success-screen p {
+    margin-top: 9px;
+
+    font-size: 13px;
+
+    color:
+        rgba(255,255,255,.33);
+}
+
+.success-restart {
+    width: 40px;
+    height: 40px;
+
+    margin-top: 24px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        #18c98c;
+
+    color:
+        #062a1d;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.success-restart:hover {
+    transform:
+        rotate(180deg);
+
+    box-shadow:
+        0 0 20px
+        rgba(24,201,140,.3);
+}
+
+
+/* =========================================
+   HIDDEN
+========================================= */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
 @media (max-width: 520px) {
     .page { padding: 20px 12px; }
     .otp-card { width: min(430px, 100%); min-height: 580px; padding: 34px 20px 28px; }
@@ -29,4 +917,19 @@
     .otp-input { width: 38px; height: 46px; font-size: 18px; } /* Scaled down for mobile */
     .floating-mail { left: 24px; }
     .floating-shield { right: 24px; }
+}
+@media (max-height: 700px) {
+
+    .page {
+        align-items:
+            flex-start;
+    }
+
+    .otp-card {
+        margin-top:
+            15px;
+
+        margin-bottom:
+            15px;
+    }
 }
